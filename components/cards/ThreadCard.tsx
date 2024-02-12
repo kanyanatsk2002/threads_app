@@ -94,13 +94,13 @@ function ThreadCard({
                   height={24}
                   className='cursor-pointer object-contain'
                 />
-                <Image
+                {/* <Image
                   src='/assets/share.svg'
                   alt='heart'
                   width={24}
                   height={24}
                   className='cursor-pointer object-contain'
-                />
+                /> */}
               </div>
 
               {isComment && comments.length > 0 && (
