@@ -34,6 +34,11 @@ type Event = {
   type: EventType;
 };
 
+export const GET = async (request: Request) => {
+  console.log("GET webhook");
+  return NextResponse.json({ message: "GET webhook" }, { status: 201 });
+};
+
 export const POST = async (request: Request) => {
   const payload = await request.json();
   const header = headers();
