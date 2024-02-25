@@ -7,6 +7,7 @@ import { connectToDB } from "../mongoose";
 import User from "../models/user.model";
 import Thread from "../models/thread.model";
 import Community from "../models/community.model";
+import mongoose from "mongoose";
 
 export async function fetchPosts(pageNumber = 1, pageSize = 20) {
   connectToDB();
@@ -49,14 +50,18 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
 }
 
 interface Params {
-  text: string,
-  author: string,
-  communityId: string | null,
-  path: string,
+  text: string;
+  author: string;
+  communityId: string | null;
+  path: string;
 }
 
-export async function createThread({ text, author, communityId, path }: Params
-) {
+export async function createThread({
+  text,
+  author,
+  communityId,
+  path,
+}: Params) {
   try {
     connectToDB();
 
@@ -238,3 +243,51 @@ export async function addCommentToThread(
     throw new Error("Unable to add comment");
   }
 }
+
+export async function addLiked(threadId: string, userId: string) {
+  connectToDB();
+  try {
+    // Find the original thread by its ID
+    const originalThread = await Thread.findById(threadId);
+
+    if (!originalThread) {
+      throw new Error("Thread not found");
+    }
+
+    if (originalThread) {
+      const likedIndex = originalThread.liked.indexOf(userId);
+      if (likedIndex !== -1) {
+        console.log("Liked ID found in the liked array.");
+        originalThread.liked.splice(likedIndex, 1);
+      } else {
+        console.log("Liked ID not found in the liked array.");
+        originalThread.liked.push(userId);
+      }
+    } else {
+      console.log("Thread not found.");
+      // Handle case where the thread with the provided ID does not exist
+    }
+
+    await originalThread.save();
+  } catch (err) {
+    console.error("Error while adding comment:", err);
+    throw new Error("Unable to add comment");
+  }
+}
+
+export const countLiked = async (threadId: string) => {
+  connectToDB();
+  try {
+    // Find the original thread by its ID
+    const originalThread = await Thread.findById(threadId);
+
+    if (!originalThread) {
+      throw new Error("Thread not found");
+    }
+
+    return originalThread.liked.length;
+  } catch (err) {
+    console.error("Error while adding comment:", err);
+    throw new Error("Unable to add comment");
+  }
+};

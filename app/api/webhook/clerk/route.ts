@@ -35,7 +35,6 @@ type Event = {
 };
 
 export const GET = async (request: Request) => {
-  console.log("GET webhook");
   return NextResponse.json({ message: "GET webhook" }, { status: 201 });
 };
 
