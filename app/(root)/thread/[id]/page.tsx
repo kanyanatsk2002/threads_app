@@ -10,7 +10,7 @@ import axios from "axios";
 
 export const revalidate = 0;
 
-function page({ params }: { params: { id: string } }) {
+function Page({ params }: { params: { id: string } }) {
   const { isSignedIn, user } = useUser();
   const [thread, setThread] = useState({
     liked: [],
@@ -89,4 +89,4 @@ function page({ params }: { params: { id: string } }) {
   }
 }
 
-export default page;
+export default Page;
