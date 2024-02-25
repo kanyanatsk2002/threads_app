@@ -1,7 +1,7 @@
 "use client";
 
+import { useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 import Comment from "@/components/forms/Comment";
 import ThreadCard from "@/components/cards/ThreadCard";
@@ -11,7 +11,6 @@ import axios from "axios";
 export const revalidate = 0;
 
 function page({ params }: { params: { id: string } }) {
-  const router = useRouter();
   const { isSignedIn, user } = useUser();
   const [thread, setThread] = useState({
     liked: [],
@@ -21,23 +20,11 @@ function page({ params }: { params: { id: string } }) {
   const [userInfo, setUserInfo] = useState({});
   useEffect(() => {
     if (isSignedIn) {
-      getUserInfo(user.id);
       if (params.id) {
         getThreadById();
       }
     }
   }, [isSignedIn]);
-
-  const getUserInfo = async (userId: string) => {
-    const payload = {
-      user_id: userId,
-    };
-    axios.post("/api/mongo/fetch-user", payload).then((res: any) => {
-      const userInfoData = res.data.result;
-      setUserInfo(userInfoData);
-      if (!userInfoData?.onboarded) router.push("/onboarding");
-    });
-  };
 
   const getThreadById = () => {
     const payload = {
