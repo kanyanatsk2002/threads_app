@@ -56,7 +56,7 @@ function ThreadCard({
 
   const checkLiekd = async () => {
     const findUserIdLiked = await liked.find(
-      (item: any) => item == currentUserId
+      (item: any) => item === currentUserId
     );
     if (findUserIdLiked) {
       setIsLiked(true);

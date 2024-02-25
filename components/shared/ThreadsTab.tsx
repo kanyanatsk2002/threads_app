@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
 
 import ThreadCard from "../cards/ThreadCard";
 import axios from "axios";
