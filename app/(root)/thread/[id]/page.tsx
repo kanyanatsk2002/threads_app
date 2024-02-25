@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
 
 import Comment from "@/components/forms/Comment";
@@ -11,20 +10,15 @@ import axios from "axios";
 export const revalidate = 0;
 
 function page({ params }: { params: { id: string } }) {
-  const { isSignedIn, user } = useUser();
   const [thread, setThread] = useState({
     liked: [],
     author: {},
     children: [],
   });
-  const [userInfo, setUserInfo] = useState({});
+
   useEffect(() => {
-    if (isSignedIn) {
-      if (params.id) {
-        getThreadById();
-      }
-    }
-  }, [isSignedIn]);
+    getThreadById();
+  }, []);
 
   const getThreadById = () => {
     const payload = {
@@ -37,56 +31,54 @@ function page({ params }: { params: { id: string } }) {
     });
   };
 
-  if (isSignedIn) {
-    return (
-      <section className="relative">
-        {thread._id && (
-          <div>
-            <ThreadCard
-              id={thread._id}
-              threadId={thread._id}
-              currentUserId={user.id}
-              parentId={thread.parentId}
-              content={thread.text}
-              author={thread.author}
-              community={thread.community}
-              createdAt={thread.createdAt}
-              comments={thread.children}
-              liked={thread.liked}
-            />
-          </div>
-        )}
-        {params.id && (
-          <div className="mt-7">
-            <Comment
-              threadId={params.id}
-              currentUserImg={user.imageUrl}
-              currentUserId={userInfo._id}
-            />
-          </div>
-        )}
-
-        <div className="mt-10">
-          {thread.children.map((childItem: any) => (
-            <ThreadCard
-              key={childItem._id}
-              id={childItem._id}
-              threadId={childItem._id}
-              currentUserId={user.id}
-              parentId={childItem.parentId}
-              content={childItem.text}
-              author={childItem.author}
-              community={childItem.community}
-              createdAt={childItem.createdAt}
-              comments={childItem.children}
-              isComment
-              liked={childItem.liked}
-            />
-          ))}
+  return (
+    <section className="relative">
+      {thread._id && (
+        <div>
+          <ThreadCard
+            id={thread._id}
+            threadId={thread._id}
+            currentUserId={user.id}
+            parentId={thread.parentId}
+            content={thread.text}
+            author={thread.author}
+            community={thread.community}
+            createdAt={thread.createdAt}
+            comments={thread.children}
+            liked={thread.liked}
+          />
         </div>
-      </section>
-    );
-  }
+      )}
+      {params.id && (
+        <div className="mt-7">
+          <Comment
+            threadId={params.id}
+            currentUserImg={user.imageUrl}
+            currentUserId={userInfo._id}
+          />
+        </div>
+      )}
+
+      <div className="mt-10">
+        {thread.children.map((childItem: any) => (
+          <ThreadCard
+            key={childItem._id}
+            id={childItem._id}
+            threadId={childItem._id}
+            currentUserId={user.id}
+            parentId={childItem.parentId}
+            content={childItem.text}
+            author={childItem.author}
+            community={childItem.community}
+            createdAt={childItem.createdAt}
+            comments={childItem.children}
+            isComment
+            liked={childItem.liked}
+          />
+        ))}
+      </div>
+    </section>
+  );
 }
 
 export default page;
