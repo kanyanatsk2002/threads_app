@@ -20,15 +20,14 @@ function Page({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     if (isSignedIn) {
-      if (params.id) {
-        getThreadById();
-      }
+      const userID = params.id ? params.id : user.id;
+      getThreadById(userID);
     }
   }, [isSignedIn]);
 
-  const getThreadById = () => {
+  const getThreadById = (userId: string) => {
     const payload = {
-      thread_id: params.id,
+      thread_id: userId,
     };
     axios.post("/api/mongo/fetch-thread-id", payload).then((res: any) => {
       const threadData = res.data.result;

@@ -13,7 +13,6 @@ const Page = ({ params }: { params: { id: string } }) => {
   const { isSignedIn } = useUser();
   const [userInfo, setUserInfo] = useState({ threads: [] });
   useEffect(() => {
-    console.log("useEffect");
     if (isSignedIn) {
       getUserInfo();
     }
@@ -25,6 +24,7 @@ const Page = ({ params }: { params: { id: string } }) => {
     };
     axios.post("/api/mongo/fetch-user", payload).then((res: any) => {
       const userInfo = res.data.result;
+      console.log(userInfo);
       setUserInfo(userInfo);
       if (!userInfo?.onboarded) router.push("/onboarding");
     });
@@ -33,22 +33,26 @@ const Page = ({ params }: { params: { id: string } }) => {
   if (isSignedIn) {
     return (
       <section>
-        <ProfileHeader
-          accountId={userInfo.id}
-          authUserId={userInfo.id}
-          name={userInfo.name}
-          username={userInfo.username}
-          imgUrl={userInfo.image}
-          bio={userInfo.bio}
-        />
+        {userInfo.id && (
+          <>
+            <ProfileHeader
+              accountId={userInfo.id}
+              authUserId={userInfo.id}
+              name={userInfo.name}
+              username={userInfo.username}
+              imgUrl={userInfo.image}
+              bio={userInfo.bio}
+            />
 
-        <div className="mt-9">
-          <ThreadsTab
-            currentUserId={userInfo.id}
-            accountId={userInfo.id}
-            accountType="User"
-          />
-        </div>
+            <div className="mt-9">
+              <ThreadsTab
+                currentUserId={userInfo.id}
+                accountId={userInfo.id}
+                accountType="User"
+              />
+            </div>
+          </>
+        )}
       </section>
     );
   }
