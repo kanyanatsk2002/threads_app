@@ -5,34 +5,6 @@ import { useEffect, useState } from "react";
 import ThreadCard from "../cards/ThreadCard";
 import axios from "axios";
 
-interface Result {
-  name: string;
-  image: string;
-  id: string;
-  threads: {
-    _id: string;
-    text: string;
-    parentId: string | null;
-    author: {
-      name: string;
-      image: string;
-      id: string;
-    };
-    community: {
-      id: string;
-      name: string;
-      image: string;
-    } | null;
-    createdAt: string;
-    liked: any;
-    children: {
-      author: {
-        image: string;
-      };
-    }[];
-  }[];
-}
-
 interface Props {
   currentUserId: string;
   accountId: string;
