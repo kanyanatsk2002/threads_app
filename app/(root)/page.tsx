@@ -30,7 +30,7 @@ function Home({
       user_id: userId,
     };
     axios.post("/api/mongo/fetch-user", payload).then((res: any) => {
-      let userInfo: any = res.data.result;
+      const userInfo = res.data.result;
       if (!userInfo?.onboarded) {
         router.push("/onboarding");
       }
