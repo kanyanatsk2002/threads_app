@@ -6,8 +6,6 @@ import { useRouter } from "next/navigation";
 import Comment from "@/components/forms/Comment";
 import ThreadCard from "@/components/cards/ThreadCard";
 
-import { fetchUser } from "@/lib/actions/user.actions";
-import { fetchThreadById } from "@/lib/actions/thread.actions";
 import axios from "axios";
 
 export const revalidate = 0;
