@@ -15,13 +15,13 @@ const Page = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     console.log("useEffect");
     if (isSignedIn) {
-      getUserInfo(user.id);
+      getUserInfo();
     }
   }, [isSignedIn]);
 
-  const getUserInfo = async (userId: string) => {
+  const getUserInfo = async () => {
     const payload = {
-      user_id: userId,
+      user_id: params.id,
     };
     axios.post("/api/mongo/fetch-user", payload).then((res: any) => {
       const userInfo = res.data.result;
@@ -34,8 +34,8 @@ const Page = ({ params }: { params: { id: string } }) => {
     return (
       <section>
         <ProfileHeader
-          accountId={user.id}
-          authUserId={user.id}
+          accountId={userInfo.id}
+          authUserId={userInfo.id}
           name={userInfo.name}
           username={userInfo.username}
           imgUrl={userInfo.image}
