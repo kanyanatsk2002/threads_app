@@ -44,8 +44,8 @@ const Page = ({ params }: { params: { id: string } }) => {
 
         <div className="mt-9">
           <ThreadsTab
-            currentUserId={user.id}
-            accountId={user.id}
+            currentUserId={userInfo.id}
+            accountId={userInfo.id}
             accountType="User"
           />
         </div>
