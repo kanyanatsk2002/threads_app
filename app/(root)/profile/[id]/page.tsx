@@ -10,7 +10,7 @@ import axios from "axios";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
-  const { isSignedIn, user } = useUser();
+  const { isSignedIn } = useUser();
   const [userInfo, setUserInfo] = useState({ threads: [] });
   useEffect(() => {
     console.log("useEffect");
