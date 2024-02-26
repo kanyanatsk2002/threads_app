@@ -25,7 +25,6 @@ function Home({
   }, [isSignedIn]);
 
   const getUserInfo = async (userId: string) => {
-    console.log(userId);
     const payload = {
       user_id: userId,
     };

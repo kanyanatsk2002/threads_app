@@ -7,6 +7,7 @@ import { connectToDB } from "../mongoose";
 import User from "../models/user.model";
 import Thread from "../models/thread.model";
 import Community from "../models/community.model";
+import mongoose from "mongoose";
 
 export async function fetchPosts(pageNumber = 1, pageSize = 20) {
   connectToDB();
@@ -106,11 +107,15 @@ async function fetchAllChildThreads(threadId: string): Promise<any[]> {
 }
 
 export async function deleteThread(id: string, path: string): Promise<void> {
+  const thread_id: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(id);
+  console.log(thread_id);
   try {
     connectToDB();
 
     // Find the thread to be deleted (the main thread)
-    const mainThread = await Thread.findById(id).populate("author community");
+    const mainThread = await Thread.findById(thread_id).populate(
+      "author community"
+    );
 
     if (!mainThread) {
       throw new Error("Thread not found");
@@ -157,6 +162,7 @@ export async function deleteThread(id: string, path: string): Promise<void> {
 
     revalidatePath(path);
   } catch (error: any) {
+    console.log("error", error);
     throw new Error(`Failed to delete thread: ${error.message}`);
   }
 }
@@ -213,7 +219,8 @@ export async function addCommentToThread(
   connectToDB();
 
   try {
-    // Find the original thread by its ID
+    // Find the
+    // original thread by its ID
     const originalThread = await Thread.findById(threadId);
 
     if (!originalThread) {

@@ -32,6 +32,7 @@ interface Props {
   }[];
   isComment?: boolean;
   liked: any;
+  updateThread: any;
 }
 
 function ThreadCard({
@@ -150,7 +151,7 @@ function ThreadCard({
         </div>
 
         <DeleteThread
-          threadId={JSON.stringify(id)}
+          threadId={threadId}
           currentUserId={currentUserId}
           authorId={author.id}
           parentId={parentId}

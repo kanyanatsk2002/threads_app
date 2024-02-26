@@ -27,16 +27,18 @@ function DeleteThread({
 
   return (
     <Image
-      src='/assets/delete.svg'
-      alt='delte'
+      src="/assets/delete.svg"
+      alt="delte"
       width={18}
       height={18}
-      className='cursor-pointer object-contain'
+      className="cursor-pointer object-contain"
       onClick={async () => {
-        await deleteThread(JSON.parse(threadId), pathname);
-        if (!parentId || !isComment) {
-          router.push("/");
-        }
+        await deleteThread(threadId, pathname);
+
+        const pathUrl = `${pathname}`;
+
+        window.location.reload();
+        router.push(pathUrl);
       }}
     />
   );
