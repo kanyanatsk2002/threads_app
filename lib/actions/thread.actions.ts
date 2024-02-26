@@ -107,13 +107,13 @@ async function fetchAllChildThreads(threadId: string): Promise<any[]> {
 }
 
 export async function deleteThread(id: string, path: string): Promise<void> {
-  const thread_id: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(id);
-  console.log(thread_id);
+  const treadesId: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(id);
+  console.log(treadesId);
   try {
     connectToDB();
 
     // Find the thread to be deleted (the main thread)
-    const mainThread = await Thread.findById(thread_id).populate(
+    const mainThread = await Thread.findById(treadesId).populate(
       "author community"
     );
 
