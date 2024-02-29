@@ -15,8 +15,6 @@ const ThreadsTab = ({ currentUserId, accountId, accountType }: Props) => {
   const [result, setResult] = useState({ threads: [] });
 
   useEffect(() => {
-    console.log("accountType =>", accountType);
-    console.log("accountId =>", accountId);
     if (accountType === "Community") {
       console.log("Community =>");
       fetchCommunityPosts();
@@ -42,7 +40,6 @@ const ThreadsTab = ({ currentUserId, accountId, accountType }: Props) => {
     const payload = {
       account_id: accountId,
     };
-    console.log("payload", payload);
     await axios
       .post("/api/mongo/fetch-user-posts", payload)
       .then((res: any) => {

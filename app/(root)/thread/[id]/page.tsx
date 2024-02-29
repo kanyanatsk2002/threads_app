@@ -46,17 +46,19 @@ function Page({ params }: { params: { id: string } }) {
   };
 
   const getThreadById = (userId: string) => {
-    console.log("getThreadById =>", userId);
     const payload = {
       thread_id: userId,
     };
     axios.post("/api/mongo/fetch-thread-id", payload).then((res: any) => {
       const threadData = res.data.result;
+      if (!threadData) {
+        router.push("/");
+      }
       setThread(threadData);
     });
   };
 
-  if (isSignedIn) {
+  if (isSignedIn && thread) {
     return (
       <section className="relative">
         {thread._id && (

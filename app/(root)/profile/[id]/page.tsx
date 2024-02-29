@@ -10,7 +10,7 @@ import axios from "axios";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
-  const { isSignedIn } = useUser();
+  const { isSignedIn, user } = useUser();
   const [userInfo, setUserInfo] = useState({ threads: [] });
   useEffect(() => {
     if (isSignedIn) {
@@ -37,7 +37,7 @@ const Page = ({ params }: { params: { id: string } }) => {
           <>
             <ProfileHeader
               accountId={userInfo.id}
-              authUserId={userInfo.id}
+              authUserId={user.id}
               name={userInfo.name}
               username={userInfo.username}
               imgUrl={userInfo.image}
