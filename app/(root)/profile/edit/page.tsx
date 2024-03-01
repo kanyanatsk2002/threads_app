@@ -28,7 +28,7 @@ async function Page() {
       <p className='mt-3 text-base-regular text-light-2'>Make any changes</p>
 
       <section className='mt-12'>
-        <AccountProfile user={userData} btnTitle='Continue' />
+        <AccountProfile user={userData} btnTitle='Update' />
       </section>
     </>
   );
